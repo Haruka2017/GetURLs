@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+<script>
+   function shortenUrl(url, protocol, host, port, path, filename, ext, query, fragment) {
+    // set url length limit
+    var limit = 20,
+  show_www = false;
+    // remove brackets if URL inside them
+    if (url.charAt(0) == '(' && url.charAt(url.length - 1) == ')') {
+      url = url.slice(1, -1);
+    }
+    // add protocol if doesn't exist
+    if (!protocol) {
+      url = 'http://' + url;
+    }
+    // create new url to show
+    var domain = show_www ? host : host.replace(/www\./gi, '');
+    var visibleUrl = domain + (path || '/') + (filename || '') + (ext || '') + (query ? '?' + query : '') + (fragment || '');
+    // shorten URL if bigger than limit
+    if (visibleUrl.length > limit && domain.length < limit) {
+      visibleUrl = visibleUrl.slice(0, domain.length + (limit - domain.length)) + '...';
+    }
+    return '' + visibleUrl + '';
+  };
+
+  // our URL RegRx
+  var urlRegex = /\(?(?:(http|https|ftp):\/\/)?(?:((?:[^\W\s]|\.|-|[:]{1})+)@{1})?((?:www.)?(?:[^\W\s]|\.|-)+[\.][^\W\s]{2,4}|localhost(?=\/)|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(\d*))?([\/]?[^\s\?]*[\/]{1})*(?:\/?([^\s\n\?\[\]\{\}\#]*(?:(?=\.)){1}|[^\s\n\?\[\]\{\}\.\#]*)?([\.]{1}[^\s\?\#]*)?)?(?:\?{1}([^\s\n\#\[\]]*))?([\#][^\s\n]*)?\)?/gi;
+
+  // some text with link
+  var text = 'Awesome tune, check it out! http://www.youtube.com/watch?v=hVW9eH_PUi8';
+
+  // magic
+  var arr = urlRegex.exec(text);
+  console.log(arr);
+</script>
+</body>
+</html>
