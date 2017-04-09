@@ -6,3 +6,4 @@ If you open new webpage, then this extension will save all urls to csv file on l
 location: chrome download folder/csv
 
 First url is webpage url.
+"# GetURLs" 
